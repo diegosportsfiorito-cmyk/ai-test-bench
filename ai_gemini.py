@@ -7,11 +7,17 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 def ask_gemini(prompt: str) -> str:
     try:
-        response = genai.generate_text(
-            model="gemini-1.5-pro-latest",
-            prompt=prompt,
-            temperature=0.7,
+        model = genai.GenerativeModel("gemini-1.5-pro-latest")
+        response = model.generate_content(
+            [
+                {
+                    "role": "user",
+                    "parts": [
+                        {"text": prompt}
+                    ]
+                }
+            ]
         )
-        return response.result
+        return response.text
     except Exception as e:
         return f"ERROR: {str(e)}"
