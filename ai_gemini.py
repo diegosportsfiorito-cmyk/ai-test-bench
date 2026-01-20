@@ -9,7 +9,7 @@ def ask_gemini(prompt: str) -> str:
     try:
         model = genai.GenerativeModel("gemini-1.5-pro-latest")
         response = model.generate_content(
-            [prompt],  # API nueva requiere lista
+            prompt,
             generation_config={
                 "temperature": 0.7,
             }
