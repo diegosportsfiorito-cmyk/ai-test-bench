@@ -1,18 +1,15 @@
 import os
-import google.generativeai as genai
+import google.genai as genai
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-genai.configure(api_key=GEMINI_API_KEY)
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 def ask_gemini(prompt: str) -> str:
     try:
-        model = genai.GenerativeModel("gemini-1.5-pro-latest")
-        response = model.generate_content(
-            prompt,
-            generation_config={
-                "temperature": 0.7,
-            }
+        response = client.models.generate_content(
+            model="gemini-1.5-pro-latest",
+            contents=prompt,
         )
         return response.text
     except Exception as e:
